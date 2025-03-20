@@ -1,4 +1,6 @@
-public class MySimpleLinkedList<T> {
+import java.util.Iterator;
+
+public class MySimpleLinkedList<T> implements Iterable<T> {
 
     private Node<T> first;
     private int size;
@@ -53,6 +55,15 @@ public class MySimpleLinkedList<T> {
         return this.size;
     }
 
+    public int indexOf(T elemento) {
+        int salida = -1;
+        for (int i = 0; i < this.size; i++) {
+            if (elemento == get(i))
+                salida = i;
+        }
+        return salida;
+    }
+
     @Override
     public String toString() {
         String aux = "";
@@ -60,6 +71,11 @@ public class MySimpleLinkedList<T> {
             aux += " " + this.get(i);
         }
         return aux;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new IteradorLista<>(this.first);
     }
 
 }
