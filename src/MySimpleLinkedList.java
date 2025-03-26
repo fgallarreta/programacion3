@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class MySimpleLinkedList<T> implements Iterable<T> {
+public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T> {
 
     private Node<T> first;
     private int size;
@@ -62,6 +62,40 @@ public class MySimpleLinkedList<T> implements Iterable<T> {
                 salida = i;
         }
         return salida;
+    }
+
+    public void sort() {
+        if (this.first == null || this.first.getNext() == null) {
+            // Si la lista está vacía o tiene un solo elemento, no es necesario ordenarla
+            return;
+        }
+
+        Node<T> sorted = null; // Lista ordenada (inicialmente vacía)
+        Node<T> current = this.first;
+
+        // Recorremos la lista original
+        while (current != null) {
+            Node<T> next = current.getNext(); // Guardamos el siguiente nodo
+            current.setNext(null); // Desconectamos el nodo para insertarlo de forma ordenada
+
+            // Insertamos el nodo de forma ordenada en la lista 'sorted'
+            if (sorted == null || sorted.getInfo().compareTo(current.getInfo()) >= 0) {
+                // Si la lista ordenada está vacía o el valor es menor que el primero
+                current.setNext(sorted);
+                sorted = current; // El nodo se convierte en el nuevo primer nodo
+            } else {
+                Node<T> temp = sorted;
+                while (temp.getNext() != null && temp.getNext().getInfo().compareTo(current.getInfo()) < 0) {
+                    temp = temp.getNext(); // Buscamos la posición correcta
+                }
+                current.setNext(temp.getNext());
+                temp.setNext(current); // Insertamos el nodo en la lista ordenada
+            }
+
+            current = next; // Avanzamos al siguiente nodo
+        }
+
+        this.first = sorted; // La lista original ahora apunta a la lista ordenada
     }
 
     @Override
