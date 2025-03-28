@@ -1,3 +1,5 @@
+package Practico1;
+
 import java.util.Iterator;
 
 public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T> {
@@ -65,11 +67,6 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T> 
     }
 
     public void sort() {
-        if (this.first == null || this.first.getNext() == null) {
-            // Si la lista está vacía o tiene un solo elemento, no es necesario ordenarla
-            return;
-        }
-
         Node<T> sorted = null; // Lista ordenada (inicialmente vacía)
         Node<T> current = this.first;
 
